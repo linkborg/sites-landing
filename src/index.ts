@@ -1,55 +1,39 @@
 import { Hono } from 'hono'
 
-const app = new Hono()
+const app = new Hono<{
+    Bindings: {
+        API_BASE: string,
+    }
+}>()
 
-app.get("/", (c) => {
-
+app.get("/", async (c) => {
   const url = new URL(c.req.url);
   const username = url.hostname.split(".")[0];
-
-  const dummyData = {
-    user: {
-        name: "Alice Smith",
-        email: "alice@example.com",
-        bio: "Passionate about technology and innovation.",
-        image: "https://randomuser.me/api/portraits/women/1.jpg",
-    },
-    description: "Welcome to my personal website!",
-    subdomain: "alice",
-    customDomain: null,
-    image: "https://img.freepik.com/free-photo/pink-sky-background-with-crescent-moon_53876-129048.jpg",
-    ackee_tracking_id: "dummy_ackee_tracking_id",
-    analytics_code: "dummy_analytics_code",
-    layout: "grid",
-    blocks: [
-        {
-            title: "Blogs",
-            description: "Read my latest blogs.",
-            type: "link",
-            slug: "blogs",
-            image: "https://via.placeholder.com/800x400",
-            hidden: false,
-            order: 1,
-        },
-        {
-          title: "Tweets",
-          description: "Latest Tweets",
-          type: "link",
-          slug: "tweets",
-          image: "https://via.placeholder.com/800x400",
-          hidden: false,
-          order: 2,
+  
+  const fetch_url = `${c.env.API_BASE}/${username}`
+    
+    console.log("fetch_url", fetch_url)
+  
+  const response = await fetch(fetch_url, {
+      headers: {
+          "Content-Type": "application/json",
       },
-        // Add more block objects as needed
-    ],
-  };
+      method: "GET",
+  });
+  
+  if (!response.ok) {
+      return c.text("Not found", 404)
+  }
+  
+  const siteData = await response.json() as SiteData;
+  
+  const user = siteData.user;
 
-  const user = dummyData.user;
-
-  const blocksHTML = dummyData.blocks
-    .filter((block) => !block.hidden) // Filter out hidden blocks
-    .sort((a, b) => a.order - b.order) // Sort blocks by order
-    .map((block) => {
+  // @ts-ignore
+    const blocksHTML = siteData.blocks
+    .filter((block: any) => !block.hidden) // Filter out hidden blocks
+    .sort((a:any, b:any) => a.order - b.order) // Sort blocks by order
+    .map((block:any) => {
       return `
       <div class="bg-gray-800 rounded-lg p-4 mx-4 mt-4 link">
         <div class="flex justify-between items-center mb-2">
@@ -161,7 +145,7 @@ app.get("/", (c) => {
     <body>
       <div class="canvas">
         <div class="banner ">
-        <img src="${dummyData.image}" alt="Banner" class="w-full h-full object-cover" />
+        <img src="${siteData.image}" alt="Banner" class="w-full h-full object-cover" />
           <div class="dark-mode-toggle w-fit h-fit" id="darkModeToggle">
             <i class="fas fa-moon"></i>
           </div>
