@@ -1,10 +1,3 @@
-interface User {
-	name: string;
-	email: string;
-	bio: string;
-	image: string;
-}
-
 interface Block {
 	title: string;
 	description: string;
@@ -16,11 +9,12 @@ interface Block {
 }
 
 interface SiteData {
-	user: User;
+	name: string;
 	description: string;
 	subdomain: string;
 	customDomain: string | null;
 	image: string;
+	logo: string;
 	ackee_tracking_id: string;
 	analytics_code: string;
 	layout: string;

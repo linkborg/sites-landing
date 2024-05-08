@@ -11,8 +11,6 @@ app.get("/", async (c) => {
   const username = url.hostname.split(".")[0];
   
   const fetch_url = `${c.env.API_BASE}/${username}`
-    
-    console.log("fetch_url", fetch_url)
   
   const response = await fetch(fetch_url, {
       headers: {
@@ -27,10 +25,7 @@ app.get("/", async (c) => {
   
   const siteData = await response.json() as SiteData;
   
-  const user = siteData.user;
-
-  // @ts-ignore
-    const blocksHTML = siteData.blocks
+  const blocksHTML = siteData.blocks
     .filter((block: any) => !block.hidden) // Filter out hidden blocks
     .sort((a:any, b:any) => a.order - b.order) // Sort blocks by order
     .map((block:any) => {
@@ -51,12 +46,11 @@ app.get("/", async (c) => {
     .join('');
 
   const htmlContent = `
-  <!DOCTYPE html>
   <html lang="en" class="dark">
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>LinkTree Alternative</title>
+      <title>LinkBorg</title>
       <script src="https://cdn.tailwindcss.com"></script>
       <link
         rel="stylesheet"
@@ -152,13 +146,13 @@ app.get("/", async (c) => {
         </div>
         <div class="text-center mb-8 -mt-16">
           <img
-            src="${user.image}"
+            src="${siteData.logo}"
             alt="Avatar"
             class="rounded-full bg-blue-500 w-32 h-32 mx-auto mb-4 m-2"
           />
-          <h1 class="text-2xl font-bold mt-4">${user.name}</h1>
+          <h1 class="text-2xl font-bold mt-4">${siteData.name}</h1>
           <p class="text-gray-400 ">
-            ${user.bio}
+            ${siteData.description || ""}
           </p>
           <div
             class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 m-7 focus:ring-blue-300 font-medium rounded-md text-sm py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
