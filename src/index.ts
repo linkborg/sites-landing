@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import {formatUrl} from "../lib/utils";
 
 const app = new Hono<{
     Bindings: {
@@ -6,11 +7,34 @@ const app = new Hono<{
     }
 }>()
 
+app.get("/:path", async (c) => {
+    const url = new URL(c.req.url);
+    const subdomain = url.hostname.split(".")[0];
+    const pathname = url.pathname;
+    
+    const fetch_url = `${c.env.API_BASE}/${subdomain}/${pathname}`;
+    
+    const response = await fetch(fetch_url, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "GET",
+    });
+    
+    if (!response.ok) {
+        return c.text("Not found", 404)
+    }
+    
+    const linkData = await response.json() as Link;
+    
+    return c.redirect(formatUrl(linkData.longurl))
+});
+
 app.get("/", async (c) => {
   const url = new URL(c.req.url);
-  const username = url.hostname.split(".")[0];
+  const subdomain = url.hostname.split(".")[0];
   
-  const fetch_url = `${c.env.API_BASE}/${username}`
+  const fetch_url = `${c.env.API_BASE}/${subdomain}`
   
   const response = await fetch(fetch_url, {
       headers: {
@@ -25,7 +49,7 @@ app.get("/", async (c) => {
   
   const siteData = await response.json() as SiteData;
   
-  const blocksHTML = siteData.blocks
+  const blocksHTML = siteData.links
     .filter((block: any) => !block.hidden) // Filter out hidden blocks
     .sort((a:any, b:any) => a.order - b.order) // Sort blocks by order
     .map((block:any) => {

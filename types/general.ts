@@ -1,11 +1,7 @@
-interface Block {
+interface Link {
 	title: string;
-	description: string;
-	type: string;
 	slug: string;
-	image: string;
-	hidden: boolean;
-	order: number;
+	longurl: string;
 }
 
 interface SiteData {
@@ -18,5 +14,5 @@ interface SiteData {
 	ackee_tracking_id: string;
 	analytics_code: string;
 	layout: string;
-	blocks: Block[];
+	links: Link[];
 }
