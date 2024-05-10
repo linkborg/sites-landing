@@ -1,5 +1,5 @@
 name = "linkborg-sites-landing"
-main = "src/index.ts"
+main = "src/index.tsx"
 compatibility_date = "2023-12-01"
 
 # [vars]
