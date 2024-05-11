@@ -35,23 +35,30 @@ description,
     className="rounded-full bg-blue-500 w-32 h-32 mx-auto mb-4"
     />
     <h1 className="text-2xl font-bold mt-4">{name}</h1>
-    <p className="text-gray-400">{description}</p>
+    {/* <p className="text-gray-400">{description}</p> */}
+    <p className="text-gray-400">Associate Cloud Developer</p>
 </div>
 );
+
 // Component for individual link blocks
-const LinkBlock: FC<{ linkData: LinkData }> = ({ linkData }) => (
-    <div key={linkData.id} className="rounded-lg m-4 link">
-        <a
-            href={`/${linkData.slug}`}
-            className="block rounded-lg border border-gray-100 p-4 text-white hover:bg-gray-600 transition-colors duration-300 "
-        >
-            <div className="flex justify-between">
-                {linkData.title}
-                <i className="fas fa-share-alt"></i>
-            </div>
-        </a>
-    </div>
-);
+const LinkBlock: FC<{ linkData: LinkData }> = ({ linkData }) => {
+  const faviconUrl = `https://www.google.com/s2/favicons?domain=${linkData.longurl}`;
+
+  return (
+      <div key={linkData.id} className="rounded-lg m-4 link">
+          <a
+              href={`/${linkData.slug}`}
+              className="block rounded-lg border border-gray-100 p-4 text-white hover:bg-gray-600 transition-colors duration-300 "
+          >
+              <div className="flex items-center">
+                  <img src={faviconUrl} alt="favicon" className="mr-2" />
+                  {linkData.title}
+                  <i className="fas fa-share-alt ml-auto"></i>
+              </div>
+          </a>
+      </div>
+  );
+};
 
 
 // Component for the whole link page
