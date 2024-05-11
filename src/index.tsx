@@ -35,8 +35,7 @@ description,
     className="rounded-full bg-blue-500 w-32 h-32 mx-auto mb-4"
     />
     <h1 className="text-2xl font-bold mt-4">{name}</h1>
-    {/* <p className="text-gray-400">{description}</p> */}
-    <p className="text-gray-400">Associate Cloud Developer</p>
+    <p className="text-gray-400">{description}</p>
 </div>
 );
 
