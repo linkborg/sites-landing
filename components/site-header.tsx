@@ -13,7 +13,7 @@ export const SiteHeader: FC<{ logo: string; name: string; description: string }>
 				className="rounded-full border-2 border-black p-1 w-32 h-32 bg-black"
 			/>
 		</div>
-		<h1 className="text-2xl font-bold mt-4">{name}</h1>
+		<h1 className="text-2xl font-bold mt-4 text-white">{name}</h1>
 		<p className="text-gray-400">{description}</p>
 	</div>
 );

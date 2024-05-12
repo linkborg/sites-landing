@@ -2,7 +2,6 @@ import {formatUrl} from "../lib/utils";
 import { Hono } from 'hono'
 import { SitePage } from "../components/site-page"
 
-
 const app = new Hono<{
     Bindings: {
         API_BASE: string,
@@ -51,7 +50,7 @@ app.get("/", async (c) => {
     }
     
     const siteData = await response.json() as SiteData;
-
+    
     return c.html(<SitePage siteData={siteData} />);
 })
 
