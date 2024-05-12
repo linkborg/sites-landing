@@ -1,10 +1,31 @@
+import internal from "stream";
+
 interface Link {
+    description: string;
+    order: any;
+    hidden: any;
 	title: string;
 	slug: string;
 	longurl: string;
 }
 
+interface LinkData {
+	title: string;
+	description: string;
+	longurl: string;
+	slug: string;
+	image: string;
+	hidden: boolean;
+	order: any;
+	social: false,
+	createdAt: any;
+	updatedAt: any;
+	siteId: any;
+	visits: any;
+}
+
 interface SiteData {
+    user: any;
 	name: string;
 	description: string;
 	subdomain: string;
