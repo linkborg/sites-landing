@@ -33,7 +33,8 @@ export const SitePage: FC<{ siteData: SiteData }> = ({ siteData }) => {
 			<meta name="twitter:title" content={ siteData.name ? siteData.name : "linkborg" } />
 			<meta name="twitter:description" content={siteData.description ? siteData.description : "Linkborg" } />
 			<meta name="twitter:image" content={ogImage} />
-			
+
+			<script defer src="https://umami.apps.xpri.dev/script.js" data-website-id="ad50e8d3-2448-4b82-ac8d-6ac917d1b673"></script>
 			<script src="https://cdn.tailwindcss.com"></script>
 			<link
 				rel="stylesheet"
