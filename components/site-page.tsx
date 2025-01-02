@@ -2,11 +2,19 @@ import type { FC } from 'hono/jsx'
 import { Banner } from "./banner"
 import { SiteHeader} from "./site-header";
 import { LinkBlock } from "./link-block";
+import { PostHog } from 'posthog-node'
 
 
-export const SitePage: FC<{ siteData: SiteData }> = ({ siteData }) => {
+export const SitePage: FC<{ siteData: SiteData }> = async ({ siteData }) => {
 	const ogImage = ``;
-	
+
+	const client = new PostHog(
+		'phc_TxHDa8lQQebgLccRrm976EZogrgRX0n4Zcene0AE6QU',
+		{ host: 'https://eu.i.posthog.com' }
+	)
+
+	await client.shutdown()
+
 	return (
 		<html lang="en" className={'dark'}>
 		<head>
@@ -33,8 +41,6 @@ export const SitePage: FC<{ siteData: SiteData }> = ({ siteData }) => {
 			<meta name="twitter:title" content={ siteData.name ? siteData.name : "linkborg" } />
 			<meta name="twitter:description" content={siteData.description ? siteData.description : "Linkborg" } />
 			<meta name="twitter:image" content={ogImage} />
-
-			<script defer src="https://umami.apps.xpri.dev/script.js" data-website-id="ad50e8d3-2448-4b82-ac8d-6ac917d1b673"></script>
 			<script src="https://cdn.tailwindcss.com"></script>
 			<link
 				rel="stylesheet"
